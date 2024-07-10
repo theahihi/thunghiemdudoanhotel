@@ -100,7 +100,7 @@ scaled_avg_price_per_room = scaler_avg_price_per_room.fit_transform(np.array(dat
 scaled_no_of_special_requests = scaler_no_of_special_requests.fit_transform(np.array(data['no_of_special_requests']).reshape(-1, 1))
 
 # Kết hợp tất cả các đặc trưng đã chuẩn hóa thành một mảng numpy
-scaled_data = np.hstack([
+data = np.hstack([
     scaled_required_car_parking_space,
     scaled_repeated_guest,
     scaled_lead_time,
@@ -117,7 +117,7 @@ scaled_data = np.hstack([
 
 
 # Dự đoán trên dữ liệu đã chuẩn hóa
-prediction = rfc.predict(scaled_data)
+prediction = rfc.predict(data)
 
 # Hiển thị kết quả dự đoán
 st.write('## Kết quả dự đoán:')
