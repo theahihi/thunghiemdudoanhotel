@@ -2,7 +2,7 @@ import streamlit as st
 import pickle
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler, LabelEncoder
+from sklearn.preprocessing import MinMaxScaler
 
 # Load the trained RandomForest model
 model = 'dudoanhotel3.pkl'
@@ -37,27 +37,15 @@ no_of_previous_cancellations = st.sidebar.number_input('Số lần đặt chỗ 
 no_of_previous_bookings_not_canceled = st.sidebar.number_input('Số lượng đặt chỗ khách hàng không hủy trước', min_value=0, step=1)
 no_of_special_requests = st.sidebar.number_input('Số lượng yêu cầu dịch vụ đặc biệt', min_value=0, step=1)
 
-# Create a DataFrame from user input
-data = {
-    'required_car_parking_space': [required_car_parking_space],
-    'repeated_guest': [repeated_guest],
-    'lead_time': [lead_time],
-    'market_segment_type': [market_segment_type_value],
-    'no_of_previous_cancellations': [no_of_previous_cancellations],
-    'no_of_previous_bookings_not_canceled': [no_of_previous_bookings_not_canceled],
-    'avg_price_per_room': [avg_price_per_room],
-    'no_of_special_requests': [no_of_special_requests]
-}
+# Create a numpy array from user input
+input_data = np.array([[required_car_parking_space, repeated_guest, lead_time, market_segment_type_value, no_of_previous_cancellations, no_of_previous_bookings_not_canceled, avg_price_per_room, no_of_special_requests]])
 
-df = pd.DataFrame(data)
-
-# Apply MinMaxScaler to the DataFrame
+# Apply MinMaxScaler to the input data
 scaler = MinMaxScaler()
-scaled_data = scaler.fit_transform(df)
-###
-input_data = np.array([[required_car_parking_space,credit_score,repeated_guest,lead_time,market_segment_type_value,no_of_previous_cancellations,no_of_previous_bookings_not_canceled,avg_price_per_room,no_of_special_requests]])
+scaled_data = scaler.fit_transform(input_data)
+
 # Prediction on the scaled data
-prediction = rfc.predict(input_data)
+prediction = rfc.predict(scaled_data)
 
 # Display the prediction result
 st.write('## Kết quả dự đoán:')
