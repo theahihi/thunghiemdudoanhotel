@@ -3,7 +3,6 @@ import pickle
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler, LabelEncoder
-from sklearn.ensemble import RandomForestClassifier
 
 # Load the trained RandomForest model
 model = 'dudoanhotel3.pkl'
