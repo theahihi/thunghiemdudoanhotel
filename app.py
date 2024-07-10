@@ -107,7 +107,8 @@ scaled_no_of_special_requests = scaler_no_of_special_requests.fit_transform([[no
 
 
 # Dự đoán trên dữ liệu đã chuẩn hóa
-prediction = rfc.predict(scaled_required_car_parking_space,scaled_repeated_guest,scaled_lead_time,scaled_market_segment_type,scaled_no_of_previous_cancellations,scaled_no_of_previous_bookings_not_canceled,scaled_avg_price_per_room,scaled_no_of_special_requests)
+input_data = np.array([[scaled_required_car_parking_space,scaled_repeated_guest,scaled_lead_time,scaled_market_segment_type,scaled_no_of_previous_cancellations,scaled_no_of_previous_bookings_not_canceled,scaled_avg_price_per_room,scaled_no_of_special_requests]])
+prediction = rfc.predict(input_data)
 
 # Hiển thị kết quả dự đoán
 st.write('## Kết quả dự đoán:')
