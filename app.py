@@ -2,9 +2,10 @@ import streamlit as st
 import pickle
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, LabelEncoder
+from sklearn.ensemble import RandomForestClassifier
 
-# Load the trained KNN model
+# Load the trained RandomForest model
 model = 'dudoanhotel3.pkl'
 rfc = pickle.load(open(model, 'rb'))
 
@@ -51,17 +52,13 @@ data = {
 
 df = pd.DataFrame(data)
 
-# Check for any missing values
-if df.isnull().values.any():
-    st.write('## Lỗi: Có giá trị thiếu trong dữ liệu đầu vào')
-else:
-    # Apply MinMaxScaler to the DataFrame
-    scaler = MinMaxScaler()
-    scaled_data = scaler.fit_transform(df)
+# Apply MinMaxScaler to the DataFrame
+scaler = MinMaxScaler()
+scaled_data = scaler.fit_transform(df)
 
-    # Prediction on the scaled data
-    prediction = rfc.predict(scaled_data)
+# Prediction on the scaled data
+prediction = rfc.predict(scaled_data)
 
-    # Display the prediction result
-    st.write('## Kết quả dự đoán:')
-    st.write('Khách hàng sẽ rời bỏ khách sạn' if prediction[0] == 1 else 'Khách hàng sẽ không rời bỏ khách sạn')
+# Display the prediction result
+st.write('## Kết quả dự đoán:')
+st.write('Khách hàng sẽ rời bỏ khách sạn' if prediction[0] == 1 else 'Khách hàng sẽ không rời bỏ khách sạn')
