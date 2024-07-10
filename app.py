@@ -65,5 +65,5 @@ if st.button("Dự đoán"):
                             avg_price_per_room, no_of_special_requests]])
     input_data_scaled = scaler.transform(input_data)
     prediction = rfc.predict(input_data_scaled)
-    predicted_class = "Rời bỏ" if prediction[0] == 1 else "Ở lại"
+    predicted_class = "Rời bỏ" if prediction[0] == 0 else "Ở lại"
     st.write(f"Dự đoán: {predicted_class}")
