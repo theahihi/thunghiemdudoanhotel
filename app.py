@@ -53,7 +53,7 @@ data = {
 df = pd.DataFrame(data)
 # Apply MinMaxScaler to the input data
 scaler = MinMaxScaler()
-input_data = scaler.transform(df)
+input_data = scaler.fit_transform(df)
 
 # Prediction on the scaled data
 prediction = rfc.predict(input_data)
