@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 # Load the trained KNN model
-model = 'dudoanhotel1.pkl'
+model = 'bankchurnhaha.pkl'
 rfc = pickle.load(open(model, 'rb'))
 
 
