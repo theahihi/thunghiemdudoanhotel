@@ -50,8 +50,16 @@ required_car_parking_space = 1 if required_car_parking_space == 'Có' else 0
 repeated_guest = st.sidebar.selectbox('Khách hàng đã từng đặt phòng', ['Không', 'Có'])
 repeated_guest = 1 if repeated_guest == 'Có' else 0
 
-market_segment_type = st.sidebar.selectbox('Phân khúc khách hàng', data['market_segment_type'].unique())
-market_segment_type_value = lb_make.transform([market_segment_type])[0]
+market_segment_map = {
+    'Offline': 0,
+    'Online': 1,
+    'Corporate': 2,
+    'Aviation': 3,
+    'Complementary': 4
+}
+
+market_segment_type = st.sidebar.selectbox('Phân khúc khách hàng', list(market_segment_map.keys()))
+market_segment_type_value = market_segment_map[market_segment_type]
 
 avg_price_per_room = st.sidebar.number_input('Giá phòng trung bình trong ngày', min_value=0, step=1)
 lead_time = st.sidebar.number_input('Số ngày khách hàng đặt phòng', min_value=18, max_value=100, step=1)
