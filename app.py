@@ -54,8 +54,8 @@ import pandas as pd
 #Thư viện dùng để làm việc với dữ liệu dạng số
 import numpy as ny
 #Thư viện dùng để vẽ những biểu đồ thống kê nâng cấp
-import seaborn as sns
-import matplotlib.pyplot as plt
+
+
 from sklearn.preprocessing import LabelEncoder
 data = pd.read_csv('Hotel Reservations.csv')
 lb_make = LabelEncoder()
