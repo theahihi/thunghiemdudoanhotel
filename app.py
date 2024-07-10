@@ -90,26 +90,16 @@ data = {
 }
 
 # Chuyển đổi từng đặc trưng thành dạng mảng numpy và áp dụng MinMaxScaler
-scaled_required_car_parking_space = scaler_required_car_parking_space.fit_transform(np.array(data['required_car_parking_space']).reshape(-1, 1))
-scaled_repeated_guest = scaler_repeated_guest.fit_transform(np.array(data['repeated_guest']).reshape(-1, 1))
-scaled_lead_time = scaler_lead_time.fit_transform(np.array(data['lead_time']).reshape(-1, 1))
-scaled_market_segment_type = scaler_market_segment_type.fit_transform(np.array(data['market_segment_type']).reshape(-1, 1))
-scaled_no_of_previous_cancellations = scaler_no_of_previous_cancellations.fit_transform(np.array(data['no_of_previous_cancellations']).reshape(-1, 1))
-scaled_no_of_previous_bookings_not_canceled = scaler_no_of_previous_bookings_not_canceled.fit_transform(np.array(data['no_of_previous_bookings_not_canceled']).reshape(-1, 1))
-scaled_avg_price_per_room = scaler_avg_price_per_room.fit_transform(np.array(data['avg_price_per_room']).reshape(-1, 1))
-scaled_no_of_special_requests = scaler_no_of_special_requests.fit_transform(np.array(data['no_of_special_requests']).reshape(-1, 1))
+scaled_required_car_parking_space = scaler_required_car_parking_space.fit_transform([[required_car_parking_space]])
+scaled_repeated_guest = scaler_repeated_guest.fit_transform([[repeated_guest]])
+scaled_lead_time = scaler_lead_time.fit_transform([[lead_time]])
+scaled_market_segment_type = scaler_market_segment_type.fit_transform([[market_segment_type_value]])
+scaled_no_of_previous_cancellations = scaler_no_of_previous_cancellations.fit_transform([[no_of_previous_cancellations]])
+scaled_no_of_previous_bookings_not_canceled = scaler_no_of_previous_bookings_not_canceled.fit_transform([[no_of_previous_bookings_not_canceled]])
+scaled_avg_price_per_room = scaler_avg_price_per_room.fit_transform([[avg_price_per_room]])
+scaled_no_of_special_requests = scaler_no_of_special_requests.fit_transform([[no_of_special_requests]])
 
 # Kết hợp tất cả các đặc trưng đã chuẩn hóa thành một mảng numpy
-data = np.hstack([
-    scaled_required_car_parking_space,
-    scaled_repeated_guest,
-    scaled_lead_time,
-    scaled_market_segment_type,
-    scaled_no_of_previous_cancellations,
-    scaled_no_of_previous_bookings_not_canceled,
-    scaled_avg_price_per_room,
-    scaled_no_of_special_requests
-])
 
 
 
