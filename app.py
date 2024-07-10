@@ -53,10 +53,10 @@ data = {
 df = pd.DataFrame(data)
 # Apply MinMaxScaler to the input data
 scaler = MinMaxScaler()
-input = scaler.transform(df)
+input_data = scaler.transform(df)
 
 # Prediction on the scaled data
-prediction = rfc.predict(input)
+prediction = rfc.predict(input_data)
 
 # Display the prediction result
 st.write('## Kết quả dự đoán:')
