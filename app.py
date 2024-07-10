@@ -52,6 +52,11 @@ data = {
 # Convert dictionary to DataFrame
 df = pd.DataFrame(data)
 
+
+# Handling missing values if any
+df.fillna(0, inplace=True)  # Replace NaN with 0, adjust this as per your data's missing value strategy
+
+
 # Load and preprocess the dataset
 data_path = 'Hotel Reservations.csv'
 data = pd.read_csv(data_path)
@@ -85,6 +90,7 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
 # Prediction on the input data
+
 input_data_scaled = scaler.transform(df)
 prediction = rfc.predict(input_data_scaled)
 
