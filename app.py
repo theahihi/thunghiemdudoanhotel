@@ -81,7 +81,7 @@ data = {
 df = pd.DataFrame(data)
 
 # Chuẩn hóa dữ liệu về khoảng [0, 1] sử dụng MinMaxScaler
-scaler = MinMaxScaler()
+scaler = MinMaxScaler(feature_range=(0, 1))
 scaled_data = scaler.fit_transform(df)
 
 
