@@ -48,12 +48,41 @@ data = {
     'avg_price_per_room': [avg_price_per_room],
     'no_of_special_requests': [no_of_special_requests]
 }
+#
+#Thư viện dùng để làm việc với dữ liệu dạng bảng
+import pandas as pd
+#Thư viện dùng để làm việc với dữ liệu dạng số
+import numpy as ny
+#Thư viện dùng để vẽ những biểu đồ thống kê nâng cấp
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import LabelEncoder
+data = pd.read_csv('Hotel Reservations.csv')
+lb_make = LabelEncoder()
+data['Booking_ID'] = lb_make.fit_transform(data['Booking_ID'])
+data['room_type_reserved'] = lb_make.fit_transform(data['room_type_reserved'])
+data['type_of_meal_plan'] = lb_make.fit_transform(data['type_of_meal_plan'])
+data['market_segment_type'] = lb_make.fit_transform(data['market_segment_type'])
+data['booking_status'] = lb_make.fit_transform(data['booking_status'])
+data['avg_price_per_room'] = lb_make.fit_transform(data['avg_price_per_room'])
+#Xác định các thuộc tính mô tả và thuộc tính dự đoán
+feature = ['required_car_parking_space','repeated_guest','lead_time','market_segment_type','no_of_previous_cancellations','no_of_previous_bookings_not_canceled','avg_price_per_room','no_of_special_requests']
+target = ['booking_status']
+X = data[feature]
+y = data[target]
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler(feature_range=(0, 1))
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
 
 # Convert dictionary to DataFrame
 df = pd.DataFrame(data)
 # Apply MinMaxScaler to the input data
-scaler = MinMaxScaler()
-input_data = scaler.fit_transform(df)
+
+input_data = scaler.transform(df)
 
 # Prediction on the scaled data
 prediction = rfc.predict(input_data)
