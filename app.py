@@ -62,7 +62,7 @@ market_segment_type = st.sidebar.selectbox('Phân khúc khách hàng', list(mark
 market_segment_type_value = market_segment_map[market_segment_type]
 
 avg_price_per_room = st.sidebar.number_input('Giá phòng trung bình trong ngày', min_value=0, step=1)
-lead_time = st.sidebar.number_input('Số ngày khách hàng đặt phòng', min_value=18, max_value=100, step=1)
+lead_time = st.sidebar.number_input('Số ngày khách hàng đặt phòng', min_value=1, max_value=1000, step=1)
 no_of_previous_cancellations = st.sidebar.number_input('Số lần đặt chỗ khách hàng đã hủy trước đó', min_value=0, step=1)
 no_of_previous_bookings_not_canceled = st.sidebar.number_input('Số lượng đặt chỗ khách hàng không hủy trước', min_value=0, step=1)
 no_of_special_requests = st.sidebar.number_input('Số lượng yêu cầu dịch vụ đặc biệt', min_value=0, step=1)
