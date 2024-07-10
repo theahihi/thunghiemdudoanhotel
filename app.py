@@ -2,7 +2,7 @@ import streamlit as st
 import pickle
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler, LabelEncoder
+from sklearn.preprocessing import MinMaxScaler
 
 # Load the trained RandomForest model
 model = 'dudoanhotel3.pkl'
@@ -52,46 +52,14 @@ data = {
 # Convert dictionary to DataFrame
 df = pd.DataFrame(data)
 
-
 # Handling missing values if any
 df.fillna(0, inplace=True)  # Replace NaN with 0, adjust this as per your data's missing value strategy
 
+# Apply MinMaxScaler to the input data
+scaler = MinMaxScaler()
+input_data_scaled = scaler.fit_transform(df)
 
-# Load and preprocess the dataset
-data_path = 'Hotel Reservations.csv'
-data = pd.read_csv(data_path)
-
-# Encoding categorical variables
-lb_make = LabelEncoder()
-data['Booking_ID'] = lb_make.fit_transform(data['Booking_ID'])
-data['room_type_reserved'] = lb_make.fit_transform(data['room_type_reserved'])
-data['type_of_meal_plan'] = lb_make.fit_transform(data['type_of_meal_plan'])
-data['market_segment_type'] = lb_make.fit_transform(data['market_segment_type'])
-data['booking_status'] = lb_make.fit_transform(data['booking_status'])
-data['avg_price_per_room'] = lb_make.fit_transform(data['avg_price_per_room'])
-
-# Selecting features and target
-feature_cols = ['required_car_parking_space', 'repeated_guest', 'lead_time', 'market_segment_type',
-                'no_of_previous_cancellations', 'no_of_previous_bookings_not_canceled',
-                'avg_price_per_room', 'no_of_special_requests']
-target_col = 'booking_status'
-
-X = data[feature_cols]
-y = data[target_col]
-
-# Splitting into train and test sets
-from sklearn.model_selection import train_test_split
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Scaling the data
-scaler = MinMaxScaler(feature_range=(0, 1))
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
-
-# Prediction on the input data
-
-input_data_scaled = scaler.transform(df)
+# Prediction on the scaled data
 prediction = rfc.predict(input_data_scaled)
 
 # Display the prediction result
