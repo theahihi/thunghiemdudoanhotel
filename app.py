@@ -54,9 +54,10 @@ df = pd.DataFrame(data)
 # Apply MinMaxScaler to the DataFrame
 scaler = MinMaxScaler()
 scaled_data = scaler.fit_transform(df)
-
+###
+input_data = np.array([[required_car_parking_space,credit_score,repeated_guest,lead_time,market_segment_type_value,no_of_previous_cancellations,no_of_previous_bookings_not_canceled,avg_price_per_room,no_of_special_requests]])
 # Prediction on the scaled data
-prediction = rfc.predict(scaled_data)
+prediction = rfc.predict(input_data)
 
 # Display the prediction result
 st.write('## Kết quả dự đoán:')
