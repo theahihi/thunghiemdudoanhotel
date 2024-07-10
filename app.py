@@ -5,16 +5,16 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
 # Load the trained RandomForest model
-model = 'dudoanhotel3.pkl'
-rfc = pickle.load(open(model, 'rb'))
+model_path = 'dudoanhotel3.pkl'
+rfc = pickle.load(open(model_path, 'rb'))
 
 # Title of the application
-st.title('Dự đoán khách hàng rời bỏ hotel')
+st.title('Dự đoán sự rời bỏ của khách hàng khách sạn')
 
 # Sidebar for user input
 st.sidebar.title('Nhập các thuộc tính để dự đoán')
 
-# Number inputs for the features
+# Input fields for features
 required_car_parking_space = st.sidebar.selectbox('Khách hàng sử dụng bãi đỗ xe', ['Không', 'Có'])
 required_car_parking_space = 1 if required_car_parking_space == 'Có' else 0
 
@@ -37,31 +37,23 @@ no_of_previous_cancellations = st.sidebar.number_input('Số lần đặt chỗ 
 no_of_previous_bookings_not_canceled = st.sidebar.number_input('Số lượng đặt chỗ khách hàng không hủy trước', min_value=0, step=1)
 no_of_special_requests = st.sidebar.number_input('Số lượng yêu cầu dịch vụ đặc biệt', min_value=0, step=1)
 
-# Create a DataFrame from user input
-data = {
-    'required_car_parking_space': [required_car_parking_space],
-    'repeated_guest': [repeated_guest],
-    'lead_time': [lead_time],
-    'market_segment_type': [market_segment_type_value],
-    'no_of_previous_cancellations': [no_of_previous_cancellations],
-    'no_of_previous_bookings_not_canceled': [no_of_previous_bookings_not_canceled],
-    'avg_price_per_room': [avg_price_per_room],
-    'no_of_special_requests': [no_of_special_requests]
-}
+# Create a numpy array from user input
+input_data = np.array([[required_car_parking_space, repeated_guest, lead_time, market_segment_type_value,
+                        no_of_previous_cancellations, no_of_previous_bookings_not_canceled,
+                        avg_price_per_room, no_of_special_requests]])
 
-# Convert dictionary to DataFrame
-df = pd.DataFrame(data)
+# Prediction logic
+if st.sidebar.button('Dự đoán'):
+    # Apply MinMaxScaler to the input data
+    scaler = MinMaxScaler()
+    input_data_scaled = scaler.fit_transform(input_data)
+    
+    # Make prediction using the loaded model
+    prediction = rfc.predict(input_data_scaled)
+    
+    # Display prediction result
+    if prediction[0] == 1:
+        st.write('Khách hàng có khả năng rời bỏ khách sạn.')
+    else:
+        st.write('Khách hàng có khả năng ở lại khách sạn.')
 
-# Handling missing values if any
-df.fillna(0, inplace=True)  # Replace NaN with 0, adjust this as per your data's missing value strategy
-
-# Apply MinMaxScaler to the input data
-scaler = MinMaxScaler()
-input_data_scaled = scaler.fit_transform(df)
-
-# Prediction on the scaled data
-prediction = rfc.predict(input_data_scaled)
-
-# Display the prediction result
-st.write('## Kết quả dự đoán:')
-st.write('Khách hàng sẽ rời bỏ khách sạn' if prediction[0] == 1 else 'Khách hàng sẽ không rời bỏ khách sạn')
