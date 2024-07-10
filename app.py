@@ -1,7 +1,6 @@
 import streamlit as st
 import pickle
 import numpy as np
-import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
 # Load the trained RandomForest model
@@ -49,11 +48,10 @@ if st.sidebar.button('Dự đoán'):
     input_data_scaled = scaler.fit_transform(input_data)
     
     # Make prediction using the loaded model
-    prediction = rfc.predict(input_data_scaled)
+    prediction = rfc.predict(input_data_scaled.reshape(1, -1))
     
     # Display prediction result
     if prediction[0] == 1:
         st.write('Khách hàng có khả năng rời bỏ khách sạn.')
     else:
         st.write('Khách hàng có khả năng ở lại khách sạn.')
-
