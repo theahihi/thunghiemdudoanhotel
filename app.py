@@ -23,11 +23,11 @@ repeated_guest = 1 if repeated_guest == 'Có' else 0
 
 market_segment_type = st.sidebar.selectbox('Phân khúc khách hàng', ['Offline', 'Online', 'Corporate', 'Aviation', 'Complementary'])
 market_segment_map = {
-    'Offline': 0.0,
-    'Online': 0.25,
-    'Corporate': 0.5,
-    'Aviation': 0.75,
-    'Complementary': 1.0
+    'Offline': 0,
+    'Online': 1,
+    'Corporate': 2,
+    'Aviation': 3,
+    'Complementary': 4
 }
 market_segment_type_value = market_segment_map[market_segment_type]
 
@@ -38,14 +38,25 @@ no_of_previous_bookings_not_canceled = st.sidebar.number_input('Số lượng đ
 no_of_special_requests = st.sidebar.number_input('Số lượng yêu cầu dịch vụ đặc biệt', min_value=0, step=1)
 
 # Create a numpy array from user input
-input_data = np.array([[required_car_parking_space, repeated_guest, lead_time, market_segment_type_value, no_of_previous_cancellations, no_of_previous_bookings_not_canceled, avg_price_per_room, no_of_special_requests]])
+data = {
+    'required_car_parking_space': [required_car_parking_space],
+    'repeated_guest': [repeated_guest],
+    'lead_time': [lead_time],
+    'market_segment_type': [market_segment_type_value],
+    'no_of_previous_cancellations': [no_of_previous_cancellations],
+    'no_of_previous_bookings_not_canceled': [no_of_previous_bookings_not_canceled],
+    'avg_price_per_room': [avg_price_per_room],
+    'no_of_special_requests': [no_of_special_requests]
+}
 
+# Convert dictionary to DataFrame
+df = pd.DataFrame(data)
 # Apply MinMaxScaler to the input data
 scaler = MinMaxScaler()
-scaled_data = scaler.fit_transform(input_data)
+input = scaler.transform(df)
 
 # Prediction on the scaled data
-prediction = rfc.predict(scaled_data)
+prediction = rfc.predict(input)
 
 # Display the prediction result
 st.write('## Kết quả dự đoán:')
